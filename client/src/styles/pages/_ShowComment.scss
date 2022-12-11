@@ -1,0 +1,52 @@
+.ShowComment {
+  .container {
+    display: table-cell;
+    justify-content: start;
+    align-items: center;
+  }
+  .container img,
+  .container p {
+    flex-grow: 0;
+  }
+
+  h3 {
+    font-family: $font-2;
+    font-size: 1.65rem;
+    @include verticalCenter;
+    justify-content: center;
+  }
+  h4 {
+    font-family: $font-2;
+    font-size: 1.6rem;
+    margin-left: 22rem;
+    //@include verticalCenter;
+    justify-content: center;
+  }
+  .container img {
+    //position:absolute;
+    float: left;
+    width: 20%;
+    height: 40%;
+    box-shadow: 15px 2px 6px #333;
+    border: 2px;
+  }
+  .text_ {
+    justify-content: center;
+    margin-left: 28rem;
+    font-size: 1.3rem;
+    padding-bottom: 1.5rem !important;
+    width: 20%;
+  }
+  .box {
+    justify-content: center;
+    box-sizing: border-box;
+    width: 25%;
+    margin: 5% 38% 0;
+    border: 3px solid rgb(20, 20, 20);
+
+    .comment {
+      justify-content: center;
+      @include verticalCenter;
+    }
+  }
+}
