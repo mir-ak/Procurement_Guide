@@ -7,7 +7,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (AuthContext.isAuthenticated()) {
+        if (AuthContext.isAuthenticated() === "true") {
           return <Component {...props} />;
         } else {
           return (
