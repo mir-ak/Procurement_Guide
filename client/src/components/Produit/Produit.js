@@ -6,9 +6,11 @@ export default class Produit extends Component {
     list_db: [],
     showInfos: false,
   };
+
   cancelCourse = () => {
     this.setState({ commentaire: "" });
   };
+
   handleInfo = () => {
     this.setState({
       showInfos: !this.state.showInfos,
@@ -20,12 +22,24 @@ export default class Produit extends Component {
   };
 
   render() {
-    let { id, name, picture } = this.props.item;
+    let { id, name, picture, info, prix } = this.props.item;
     return (
-      <div className="project">
-        <h4>{name}</h4>
-        <button onClick={() => id}>
-          <img src={picture} alt="" onClick={() => this.onClickImage(id)} />
+      <div className="project" style={{ cursor: "pointer" }}>
+        <button
+          style={{ borderRadius: "25px" }}
+          onClick={() => this.onClickImage(id)}>
+          <img src={picture} alt="" />
+          <h4>{name}</h4>
+          <h5>{info}</h5>
+          <h6
+            style={{
+              width: "30%",
+              display: "block",
+              fontSize: "1.4rem",
+              backgroundColor: "green",
+            }}>
+            {prix}
+          </h6>
         </button>
       </div>
     );

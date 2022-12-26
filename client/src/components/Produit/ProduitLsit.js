@@ -39,7 +39,7 @@ export default class ProduiList extends Component {
           })}
           <div className="projects">
             {produits
-              .filter((item) => item.languages.includes(selectedRadio))
+              .filter((item) => item.category.includes(selectedRadio))
               .map((item) => {
                 return (
                   <Produit key={item.id} item={item} admin={this.props.admin} />
