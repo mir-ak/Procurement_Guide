@@ -7,7 +7,7 @@ import MaterialIcon from "material-icons-react";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Menu from "@mui/material/Menu";
-
+import Auth from "./PrivateRoute/Auth";
 const Navbar = (admin) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -50,11 +50,17 @@ const Navbar = (admin) => {
       }}
       position="static">
       <Toolbar>
-        <Tooltip title="Page d'accueil">
-          <IconButton component={Link} to="/">
+        {admin.admin ? (
+          <IconButton component={Link} to="/admin">
             <MaterialIcon icon="house" size={50} color="#ffffff" invert />
           </IconButton>
-        </Tooltip>
+        ) : (
+          <Tooltip title="Page d'accueil">
+            <IconButton component={Link} to="/">
+              <MaterialIcon icon="house" size={50} color="#ffffff" invert />
+            </IconButton>
+          </Tooltip>
+        )}
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <IconButton component={Link} to="/product">
@@ -65,9 +71,13 @@ const Navbar = (admin) => {
               invert
             />
           </IconButton>
-
           {admin.admin ? (
-            <IconButton component={Link} to="/">
+            <IconButton
+              component={Link}
+              to="/"
+              onClick={() => {
+                Auth.logout();
+              }}>
               <MaterialIcon
                 icon="power_settings_new"
                 size={38}
@@ -78,7 +88,12 @@ const Navbar = (admin) => {
           ) : (
             <Tooltip title="Partie Admin">
               <IconButton component={Link} to="/admin">
-                <MaterialIcon icon="unlock" size={38} color="#ffffff" invert />
+                <MaterialIcon
+                  icon="lock_open"
+                  size={38}
+                  color="#ffffff"
+                  invert
+                />
               </IconButton>
             </Tooltip>
           )}
