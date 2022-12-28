@@ -7,10 +7,12 @@ import Product from "./page/product";
 import NotFound from "./page/NotFound";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import ShowComment from "./page/ShowComment";
-
+import "react-notifications/lib/notifications.css";
+import { NotificationContainer } from "react-notifications";
 function App() {
   return (
     <>
+      <NotificationContainer />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
