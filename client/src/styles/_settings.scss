@@ -46,8 +46,8 @@ a:visited {
 }
 .home,
 .knowledges,
-.portfolio,
-.contact {
+.product,
+.showComment {
   display: flex;
 
   @media screen and (max-width: 850px) {
@@ -55,8 +55,8 @@ a:visited {
   }
 }
 .homeContent,
-.knowledgesContent,
-.portfolioContent,
+.product,
+.showComment,
 .contactContent {
   margin-left: 0.4rem;
 
