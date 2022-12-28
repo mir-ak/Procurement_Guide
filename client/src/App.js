@@ -18,7 +18,10 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/product" component={Product} />
         <Route path="/showcomment/:id" component={ShowComment} />
-        <Route path="/:admin/showcomment/:id" component={ShowComment} />
+        <Route
+          path="/:admin/showcomment/:id/:category"
+          component={ShowComment}
+        />
         <PrivateRoute exact path="/admin" component={Admin} />
         <Route component={NotFound} />
       </Switch>
