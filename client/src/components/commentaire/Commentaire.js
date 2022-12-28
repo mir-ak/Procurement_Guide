@@ -37,6 +37,7 @@ export default function ExperClass({ id }) {
       setState("success");
     }, 19500);
   };
+
   const callfunction = () => {
     fetch("/IsOk?IsOk=yes")
       .then((res) => res.json())
