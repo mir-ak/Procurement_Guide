@@ -41,8 +41,8 @@ def addComentsToDataset():
   for id in result:
     if id == None:
       continue
-    for id_comment in id:
-      coments.append(id_comment+";"+id[id_comment]['commentaire']+";"+id[id_comment]['predire']+"\n")
+    for id_comment in result[id]:
+      coments.append(id_comment+";"+result[id][id_comment]['commentaire']+";"+result[id][id_comment]['predire']+"\n")
   checkString(coments)
 
 def traitement_text(avis, lema = True) :
