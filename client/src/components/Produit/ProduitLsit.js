@@ -20,7 +20,7 @@ export default class ProduiList extends Component {
     file: {},
     radios2: [],
     radios: [],
-    selectedRadio: "informatique",
+    selectedRadio: "",
     showModel: false,
   };
 
@@ -85,7 +85,10 @@ export default class ProduiList extends Component {
       const storageRef = ref(storage, `/media/${this.state.file.name}`);
       uploadBytesResumable(storageRef, this.state.file);
       this.handCancel();
-      NotificationManager.success(`product has been saved`);
+      setTimeout(() => {
+        NotificationManager.success(`product has been saved`);
+        window.location.reload(false);
+      }, 500);
     } else {
       this.setState({
         messageError:
@@ -204,8 +207,8 @@ export default class ProduiList extends Component {
     var newRadios = [];
     var newProducts = [];
     firebase.onValue(firebase.ref(databaseApp, "products/"), (snapshot) => {
-      Object.entries(snapshot.val()).forEach(([category, val]) => {
-        newRadios.push({ value: category });
+      Object.entries(snapshot.val()).forEach(([category, val], idx) => {
+        newRadios.push({ id: idx, value: category });
         Object.entries(val).forEach(([id, values]) => {
           getDownloadURL(ref(storage, `media/${values.picture}`))
             .then((data) => {
@@ -221,6 +224,7 @@ export default class ProduiList extends Component {
               this.setState({
                 radios: newRadios,
                 products: newProducts,
+                selectedRadio: newProducts[0].category,
               });
             })
             .catch((e) => console.log(e));
@@ -237,16 +241,16 @@ export default class ProduiList extends Component {
           {radios &&
             radios.map((radio) => {
               return (
-                <li key={radio.value}>
+                <li key={radio.id}>
                   <input
                     type="radio"
                     name="radio"
                     checked={radio.value === selectedRadio}
                     value={radio.value}
-                    id={radio.value}
+                    id={radio.id}
                     onChange={this.handlRadio}
                   />
-                  <label htmlFor={radio.value}>{radio.value}</label>
+                  <label htmlFor={radio.id}>{radio.value}</label>
                 </li>
               );
             })}
@@ -277,13 +281,14 @@ export default class ProduiList extends Component {
         </ul>
         <div className="projects">
           {this.state.showModel && this.showModel()}
-          {products
-            .filter((item) => item.category.includes(selectedRadio))
-            .map((item) => {
-              return (
-                <Produit key={item.id} item={item} admin={this.props.admin} />
-              );
-            })}
+          {products &&
+            products
+              .filter((item) => item.category.includes(selectedRadio))
+              .map((item) => {
+                return (
+                  <Produit key={item.id} item={item} admin={this.props.admin} />
+                );
+              })}
         </div>
       </div>
     );
