@@ -18,9 +18,7 @@ export default class Produit extends Component {
   };
 
   onClickImage = (id, category) => {
-    console.log(category);
-    window.location.href =
-      this.props.admin + "/showcomment/" + id + "/" + category;
+    window.location.href = `${this.props.admin}/showcomment/${category}/${id}`;
   };
 
   render() {
@@ -38,7 +36,7 @@ export default class Produit extends Component {
             size={35}
             value={3.5}
             color={"#ffffff"}
-            isHalf={true}
+            isHalf={false}
             emptyIcon={<i className="far fa-star"></i>}
             halfIcon={<i className="fa fa-star-half-alt"></i>}
             fullIcon={<i className="fa fa-star"></i>}
@@ -46,7 +44,7 @@ export default class Produit extends Component {
           />
           <h6
             style={{
-              width: "30%",
+              width: "50%",
               display: "block",
               fontSize: "1.4rem",
               backgroundColor: "green",
