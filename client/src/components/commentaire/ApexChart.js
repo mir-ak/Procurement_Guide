@@ -11,20 +11,18 @@ export default class ApexChart extends Component {
 
   render() {
     return (
-      <div className="ApexChart">
-        <div className="camembert">
-          <h3>Analyse</h3>
-          <ReactApexChart
-            options={this.state.options}
-            series={[
-              this.props.comments.compentPositive,
-              this.props.comments.compentNegative,
-            ]}
-            type="pie"
-            width={480}
-            colors={this.state.colors}
-          />
-        </div>
+      <div>
+        <h3>Analyse</h3>
+        <ReactApexChart
+          options={this.state.options}
+          series={[
+            this.props.comments.compentPositive,
+            this.props.comments.compentNegative,
+          ]}
+          type="pie"
+          width={480}
+          colors={this.state.colors}
+        />
       </div>
     );
   }
