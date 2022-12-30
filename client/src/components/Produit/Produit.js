@@ -22,7 +22,8 @@ export default class Produit extends Component {
   };
 
   render() {
-    let { id, title, picture, category, description, price } = this.props.item;
+    let { id, title, picture, category, description, price, recommendation } =
+      this.props.item;
     return (
       <div className="project" style={{ cursor: "pointer" }}>
         <button
@@ -31,17 +32,26 @@ export default class Produit extends Component {
           <img src={picture} alt="" />
           <h4>{title}</h4>
           <h5>{description}</h5>
-          <ReactStars
-            count={5}
-            size={35}
-            value={3.5}
-            color={"#ffffff"}
-            isHalf={false}
-            emptyIcon={<i className="far fa-star"></i>}
-            halfIcon={<i className="fa fa-star-half-alt"></i>}
-            fullIcon={<i className="fa fa-star"></i>}
-            activeColor="#ffd700"
-          />
+          {Number(recommendation.split("/")[0]) /
+            Number(recommendation.split("/")[1]) >
+          0 ? (
+            <ReactStars
+              classNames={"mx-left"}
+              count={5}
+              size={35}
+              value={
+                Number(recommendation.split("/")[0]) /
+                Number(recommendation.split("/")[1])
+              }
+              edit={false}
+              color={"#ffffff"}
+              isHalf={true}
+              emptyIcon={<i className="far fa-star"></i>}
+              halfIcon={<i className="fa fa-star-half-alt"></i>}
+              fullIcon={<i className="fa fa-star"></i>}
+              activeColor="#ffd700"
+            />
+          ) : null}
           <h6
             style={{
               width: "50%",

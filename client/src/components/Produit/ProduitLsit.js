@@ -48,6 +48,7 @@ export default class ProduiList extends Component {
         price: this.state.price,
         category: this.state.category,
         picture: this.state.file.name,
+        recommendation: "0/0",
       }
     );
   };
@@ -110,6 +111,7 @@ export default class ProduiList extends Component {
                 <Input
                   type="text"
                   name="title"
+                  maxlength="30"
                   placeholder="title"
                   value={this.state.title}
                   onChange={(e) => {
@@ -125,6 +127,7 @@ export default class ProduiList extends Component {
                   type="text"
                   name="description"
                   placeholder="description"
+                  maxlength="60"
                   value={this.state.description}
                   onChange={(e) => {
                     this.setState({ description: e.target.value });
@@ -218,6 +221,7 @@ export default class ProduiList extends Component {
                 description: values.description,
                 price: values.price,
                 category: values.category,
+                recommendation: values.recommendation,
                 picture: data,
               };
               newProducts.push(newJsonProduct);
