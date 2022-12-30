@@ -18,7 +18,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/product" component={Product} />
         <Route path="/showcomment/:category/:id" component={ShowComment} />
-        <Route
+        <PrivateRoute
           path="/:admin/showcomment/:category/:id"
           component={ShowComment}
         />
