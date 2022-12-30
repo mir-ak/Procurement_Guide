@@ -8,7 +8,6 @@
   .container p {
     flex-grow: 0;
   }
-
   h3 {
     font-family: $font-2;
     font-size: 1.65rem;
@@ -32,21 +31,52 @@
   }
   .text_ {
     justify-content: center;
-    margin-left: 28rem;
+    margin-left: 22rem;
     font-size: 1.3rem;
     padding-bottom: 1.5rem !important;
-    width: 20%;
+    width: 60%;
   }
   .box {
     justify-content: center;
     box-sizing: border-box;
-    width: 25%;
-    margin: 5% 38% 0;
-    border: 3px solid rgb(20, 20, 20);
+    border-radius: 25px;
+    width: 50%;
+    margin: 4% auto;
+    border: 3px solid $color-1;
 
     .comment {
       justify-content: center;
       @include verticalCenter;
     }
+  }
+
+  /* Box styles */
+  .myBox {
+    float: left;
+    border: none;
+    font: 24px/36px sans-serif;
+    width: 90%;
+    height: 380px;
+    overflow: auto;
+  }
+
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border: 1px solid $color-1;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(115deg, $color-1 10%, transparent 100%);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(115deg, $color-1 10%, transparent 100%);
   }
 }

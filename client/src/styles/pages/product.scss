@@ -161,7 +161,7 @@
         padding: 2rem;
         box-shadow: 0 10px 10px #333;
         animation: popup 0.6s ease forwards;
-        transform: scale(2);
+        transform: scale(0);
         transform-origin: center;
 
         @keyframes popup {
