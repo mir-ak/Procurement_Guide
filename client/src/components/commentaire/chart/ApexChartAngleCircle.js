@@ -50,7 +50,7 @@ export default class ApexChartAngleCircle extends Component {
             return (
               seriesName +
               " :  " +
-              opts.w.globals.series[opts.seriesIndex] +
+              opts.w.globals.series[opts.seriesIndex].toFixed(2) +
               "%"
             );
           },
