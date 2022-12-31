@@ -61,7 +61,7 @@ function ShowComment() {
         "products/" + qaury.category + "/" + id
       )
     );
-    NotificationManager.success(`product has been removed`);
+    NotificationManager.success(`product has been deleted`);
     history.push("/admin");
   };
 
