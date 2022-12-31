@@ -191,11 +191,11 @@ export default function ExperClass({ id }) {
                 <div>
                   <ApexChartAngleCircle
                     data={[
-                      starFive / totalStars.length,
-                      starFour / totalStars.length,
-                      starThree / totalStars.length,
-                      starTwo / totalStars.length,
-                      starOne / totalStars.length,
+                      (starFive * 100) / (totalStars.length * 5),
+                      (starFour * 100) / (totalStars.length * 4),
+                      (starThree * 100) / (totalStars.length * 3),
+                      (starTwo * 100) / (totalStars.length * 2),
+                      (starOne * 100) / totalStars.length,
                     ]}
                   />
                 </div>
