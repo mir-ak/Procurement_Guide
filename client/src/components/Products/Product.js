@@ -18,7 +18,7 @@ export default class Produit extends Component {
   };
 
   onClickImage = (id, category) => {
-    window.location.href = `${this.props.admin}/showcomment/${category}/${id}`;
+    window.location.href = `${this.props.admin}/showcomments/${category}/${id}`;
   };
 
   render() {

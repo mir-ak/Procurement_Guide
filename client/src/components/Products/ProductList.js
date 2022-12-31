@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Produit from "./Produit";
+import Product from "./Product";
 import Box from "@mui/material/Box";
 import MaterialIcon from "material-icons-react";
 import Tooltip from "@mui/material/Tooltip";
@@ -89,7 +89,7 @@ export default class ProduiList extends Component {
       setTimeout(() => {
         NotificationManager.success(`product has been saved`);
         window.location.reload(false);
-      }, 500);
+      }, 300);
     } else {
       this.setState({
         messageError:
@@ -111,7 +111,7 @@ export default class ProduiList extends Component {
                 <Input
                   type="text"
                   name="title"
-                  maxlength="30"
+                  maxLength="30"
                   placeholder="title"
                   value={this.state.title}
                   onChange={(e) => {
@@ -127,7 +127,7 @@ export default class ProduiList extends Component {
                   type="text"
                   name="description"
                   placeholder="description"
-                  maxlength="60"
+                  maxLength="60"
                   value={this.state.description}
                   onChange={(e) => {
                     this.setState({ description: e.target.value });
@@ -163,10 +163,12 @@ export default class ProduiList extends Component {
                 />
               </FormGroup>{" "}
               <FormGroup>
+                <Label for="category" hidden>
+                  file
+                </Label>
                 <Input
                   accept={"image/png, image/jpeg ,image/jpg, video/mp4"}
                   type="file"
-                  ref="attachments"
                   onChange={(e) => {
                     this.handleUpload(e);
                   }}
@@ -290,7 +292,7 @@ export default class ProduiList extends Component {
               .filter((item) => item.category.includes(selectedRadio))
               .map((item) => {
                 return (
-                  <Produit key={item.id} item={item} admin={this.props.admin} />
+                  <Product key={item.id} item={item} admin={this.props.admin} />
                 );
               })}
         </div>
