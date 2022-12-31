@@ -6,7 +6,7 @@ import Login from "./components/Connexion/Login";
 import Product from "./page/product";
 import NotFound from "./page/NotFound";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
-import ShowComment from "./page/ShowComment";
+import ShowAndAddComment from "./page/ShowAndAddComment";
 import "react-notifications/lib/notifications.css";
 import { NotificationContainer } from "react-notifications";
 function App() {
@@ -17,10 +17,13 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/product" component={Product} />
-        <Route path="/showcomment/:category/:id" component={ShowComment} />
+        <Route
+          path="/showcomments/:category/:id"
+          component={ShowAndAddComment}
+        />
         <PrivateRoute
-          path="/:admin/showcomment/:category/:id"
-          component={ShowComment}
+          path="/:admin/showcomments/:category/:id"
+          component={ShowAndAddComment}
         />
         <PrivateRoute exact path="/admin" component={Admin} />
         <Route component={NotFound} />
