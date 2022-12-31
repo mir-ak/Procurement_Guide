@@ -212,30 +212,31 @@ export default class ProduiList extends Component {
     var newRadios = [];
     var newProducts = [];
     firebase.onValue(firebase.ref(databaseApp, "products/"), (snapshot) => {
-      Object.entries(snapshot.val()).forEach(([category, val], idx) => {
-        newRadios.push({ id: idx, value: category });
-        Object.entries(val).forEach(([id, values]) => {
-          getDownloadURL(ref(storage, `media/${values.picture}`))
-            .then((data) => {
-              let newJsonProduct = {
-                id: id,
-                title: values.title,
-                description: values.description,
-                price: values.price,
-                category: values.category,
-                recommendation: values.recommendation,
-                picture: data,
-              };
-              newProducts.push(newJsonProduct);
-              this.setState({
-                radios: newRadios,
-                products: newProducts,
-                selectedRadio: newProducts[0].category,
-              });
-            })
-            .catch((e) => console.log(e));
+      if (snapshot.val())
+        Object.entries(snapshot.val()).forEach(([category, val], idx) => {
+          newRadios.push({ id: idx, value: category });
+          Object.entries(val).forEach(([id, values]) => {
+            getDownloadURL(ref(storage, `media/${values.picture}`))
+              .then((data) => {
+                let newJsonProduct = {
+                  id: id,
+                  title: values.title,
+                  description: values.description,
+                  price: values.price,
+                  category: values.category,
+                  recommendation: values.recommendation,
+                  picture: data,
+                };
+                newProducts.push(newJsonProduct);
+                this.setState({
+                  radios: newRadios,
+                  products: newProducts,
+                  selectedRadio: newProducts[0].category,
+                });
+              })
+              .catch((e) => console.log(e));
+          });
         });
-      });
     });
   }
 
