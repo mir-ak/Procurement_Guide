@@ -8,6 +8,7 @@ import ReactiveButton from "reactive-button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ReactStars from "react-rating-stars-component";
 import ApexChartAngleCircle from "../chart/ApexChartAngleCircle";
+import { NotificationManager } from "react-notifications";
 
 export default function ExperClass({ id }) {
   let i = 0;
@@ -62,8 +63,25 @@ export default function ExperClass({ id }) {
     return summ / ArrayLen;
   };
 
+  // const updateCountStars = (index) => {
+  //   onValue(
+  //     ref(databaseApp, "products/" + id.category + "/" + id.id),
+  //     (snapshot) => {
+  //       if (snapshot.val() && id.id)
+  //         update(ref(databaseApp, "products/" + id.category + "/" + id.id), {
+  //           recommendation: `${
+  //             Number(snapshot.val().recommendation.split("/")[0]) +
+  //             index.countStars
+  //           } / ${Number(snapshot.val().recommendation.split("/")[1]) + 1}`,
+  //         });
+  //     }
+  //   );
+  // };
+
   const deletComment = (index) => {
     remove(child(ref(databaseApp), "comments/" + id.id + "/" + index.item));
+    //updateCountStars(index);
+    NotificationManager.success(`comment has been deleted`);
   };
 
   const onClickHandler = () => {
