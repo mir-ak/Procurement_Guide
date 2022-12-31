@@ -36,10 +36,10 @@ export default class ApexChartAngleCircle extends Component {
         legend: {
           show: true,
           floating: true,
-          fontSize: "15px",
+          fontSize: "14px",
           position: "left",
           offsetX: 0,
-          offsetY: -5,
+          offsetY: 0,
           labels: {
             useSeriesColors: false,
           },
