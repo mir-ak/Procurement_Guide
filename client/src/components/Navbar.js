@@ -8,6 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Menu from "@mui/material/Menu";
 import Auth from "./PrivateRoute/Auth";
+import { NotificationManager } from "react-notifications";
+
 const Navbar = (admin) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -77,6 +79,7 @@ const Navbar = (admin) => {
               to="/"
               onClick={() => {
                 Auth.logout();
+                NotificationManager.success(`You are logged out successfully`);
               }}>
               <MaterialIcon
                 icon="power_settings_new"

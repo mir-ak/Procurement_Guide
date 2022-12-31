@@ -12,6 +12,7 @@ import { auth } from "../../config/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import AuthContext from "../PrivateRoute/Auth";
 import Navbar from "../Navbar";
+import { NotificationManager } from "react-notifications";
 class Login extends Component {
   state = {
     email: "",
@@ -29,6 +30,7 @@ class Login extends Component {
             AuthContext.login(() => {
               this.props.history.push("/admin");
             });
+            NotificationManager.success(`You are logged in successfully`);
           }
         },
         function (error) {
