@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import ProduiList from "../components/Produit/ProduitLsit";
+import ProductList from "../components/Products/ProductList";
 const Admin = () => {
   return (
     <div>
       <Navbar admin="admin" />
       <div className="Product">
-        <ProduiList admin="admin" />
+        <ProductList admin="admin" />
       </div>
     </div>
   );

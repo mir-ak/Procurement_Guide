@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import ProduiList from "../components/Produit/ProduitLsit";
+import ProductList from "../components/Products/ProductList";
 
 function Product() {
   return (
     <div>
       <Navbar />
       <div className="Product">
-        <ProduiList admin="" />
+        <ProductList admin="" />
       </div>
     </div>
   );
