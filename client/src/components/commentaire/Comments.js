@@ -3,11 +3,11 @@ import databaseApp from "../../config/firebaseConfig";
 import { ref, onValue, child, update, remove } from "firebase/database";
 import MaterialIcon from "material-icons-react";
 import IconButton from "@mui/material/IconButton";
-import ApexChart from "./chart/ApexChart";
+import ApexChart from "../chart/ApexChart";
 import ReactiveButton from "reactive-button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ReactStars from "react-rating-stars-component";
-import ApexChartAngleCircle from "./chart/ApexChartAngleCircle";
+import ApexChartAngleCircle from "../chart/ApexChartAngleCircle";
 
 export default function ExperClass({ id }) {
   let i = 0;

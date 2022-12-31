@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@mui/material/IconButton";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import Navbar from "../components/Navbar";
-import Commentaire from "../components/commentaire/Commentaire";
+import Comments from "../components/commentaire/Comments";
 import databaseApp, { storage } from "../config/firebaseConfig";
 import * as firebase from "firebase/database";
 import { ref, getDownloadURL } from "firebase/storage";
@@ -169,7 +169,7 @@ function ShowComment() {
           </h3>
           <div className="container">
             <img src={products[0].picture} alt="" />
-            <Commentaire id={qaury} />
+            <Comments id={qaury} />
           </div>
           {showOneComment()}
         </div>
