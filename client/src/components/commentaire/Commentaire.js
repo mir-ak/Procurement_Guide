@@ -1,23 +1,49 @@
 import React, { useEffect, useState } from "react";
 import databaseApp from "../../config/firebaseConfig";
-import { ref, onValue, child, update } from "firebase/database";
+import { ref, onValue, child, update, remove } from "firebase/database";
 import MaterialIcon from "material-icons-react";
 import IconButton from "@mui/material/IconButton";
-import ApexChart from "./ApexChart";
+import ApexChart from "./chart/ApexChart";
 import ReactiveButton from "reactive-button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ReactStars from "react-rating-stars-component";
+import ApexChartAngleCircle from "./chart/ApexChartAngleCircle";
 
 export default function ExperClass({ id }) {
   let i = 0;
   const comments = { compentPositive: 0, compentNegative: 0 };
   const [db_list, setDb_list] = useState([]);
   const [state, setState] = useState("idle");
+  const [starOne, setstarOne] = useState(0);
+  const [starTwo, setstarTwo] = useState(0);
+  const [starThree, setstarThree] = useState(0);
+  const [starFour, setstarFour] = useState(0);
+  const [starFive, setstarFive] = useState(0);
+  const [totalStars, setTotalStars] = useState([]);
+
   useEffect(() => {
+    const countItemStars = (item) => {
+      if (item === 5) setstarFive((prevArray) => prevArray + item);
+      else if (item === 4 || item === 4.5)
+        setstarFour((prevArray) => prevArray + item);
+      else if (item === 3 || item === 3.5)
+        setstarThree((prevArray) => prevArray + item);
+      else if (item === 2 || item === 2.5)
+        setstarTwo((prevArray) => prevArray + item);
+      else if (item === 0.5 || item === 1.5)
+        setstarOne((prevArray) => prevArray + item);
+    };
+
     function init_db() {
       onValue(ref(databaseApp, "comments/" + id.id), (snapshot) => {
         let previousList = snapshot.val();
         let list = [];
         for (let item in previousList) {
+          setTotalStars((prevArray) => [
+            ...prevArray,
+            previousList[item].countStars,
+          ]);
+          countItemStars(previousList[item].countStars);
           list.push({ item, ...previousList[item] });
         }
         setDb_list(list);
@@ -26,10 +52,19 @@ export default function ExperClass({ id }) {
     init_db();
   }, [id]);
 
-  /* const deletdata= (index) =>{
-    console.log(index);
-    remove(child(ref(databaseApp), "comment/"+id.id+'/'+index));   
-  } */
+  const ArrayAvg = (myArray) => {
+    var i = 0,
+      summ = 0,
+      ArrayLen = myArray.length;
+    while (i < ArrayLen) {
+      summ = summ + myArray[i++];
+    }
+    return summ / ArrayLen;
+  };
+
+  const deletComment = (index) => {
+    remove(child(ref(databaseApp), "comments/" + id.id + "/" + index.item));
+  };
 
   const onClickHandler = () => {
     setState("loading");
@@ -46,16 +81,17 @@ export default function ExperClass({ id }) {
       });
   };
 
-  const updatedata = (index) => {
-    console.log(index);
+  const updateReview = (index) => {
     if (index.predire === "positive") {
       update(child(ref(databaseApp), "comments/" + id.id + "/" + index.item), {
         commentaire: index.commentaire,
+        countStars: index.countStars,
         predire: "negative",
       });
     } else {
       update(child(ref(databaseApp), "comments/" + id.id + "/" + index.item), {
         commentaire: index.commentaire,
+        countStars: index.countStars,
         predire: "positive",
       });
     }
@@ -74,10 +110,23 @@ export default function ExperClass({ id }) {
 
   return (
     <div>
-      {id.admin ? (
-        <div style={{ margin: "5%" }}>
-          <ApexChart comments={countComments()} />
-          <div style={{ float: "right" }}>
+      {db_list.length > 0 && id.admin ? (
+        <div
+          style={{
+            display: db_list.length > 0 ? "grid" : "none",
+            float: "right",
+            justifyItems: "end",
+            position: "absolute",
+            right: 0,
+          }}>
+          <div>
+            <ApexChart comments={countComments()} />
+          </div>
+          <div
+            style={{
+              position: "relative",
+              right: "45%",
+            }}>
             <ReactiveButton
               buttonState={state}
               onClick={() => {
@@ -89,47 +138,117 @@ export default function ExperClass({ id }) {
               animation={true}
               style={{
                 borderRadius: "25px",
-                marginTop: "170%",
-                marginLeft: "-30%",
               }}
-              idleText={"Relancer le Modèle"}
+              idleText={"Retrain the ML Model "}
             />
           </div>
+          {totalStars.length > 0 ? (
+            <div
+              style={{
+                position: "relative",
+                right: "25%",
+                top: "5%",
+              }}>
+              <strong style={{ fontSize: "25px" }}>
+                <u>Customer reviews</u>
+              </strong>
+              <div>
+                <ReactStars
+                  classNames={"mx-left"}
+                  count={5}
+                  value={ArrayAvg(totalStars)}
+                  size={35}
+                  edit={false}
+                  isHalf={true}
+                  emptyIcon={<i className="far fa-star"></i>}
+                  halfIcon={<i className="fa fa-star-half-alt"></i>}
+                  fullIcon={<i className="fa fa-star"></i>}
+                  activeColor="#ffd700"
+                />
+                <div>
+                  <strong>
+                    <u>Total</u>: {ArrayAvg(totalStars).toFixed(2)} out of 5
+                  </strong>
+                </div>
+                <div>
+                  <ApexChartAngleCircle
+                    data={[
+                      starFive / totalStars.length,
+                      starFour / totalStars.length,
+                      starThree / totalStars.length,
+                      starTwo / totalStars.length,
+                      starOne / totalStars.length,
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
       ) : null}
-      {db_list &&
-        db_list.map((item) => {
-          return (
-            <div className="ShowComment" key={item.commentaire}>
-              <h4>
-                <MaterialIcon
-                  icon="account_circle"
-                  size={30}
-                  color="#000000"
-                  invert
-                />{" "}
-                user{++i} :{" "}
-              </h4>
-              <p className="text_">
-                {item.commentaire} <br></br>
-                {id.admin ? (
-                  <span>
-                    {" "}
-                    avis : {item.predire}
-                    <IconButton onClick={updatedata.bind(this, item)}>
-                      <MaterialIcon
-                        icon="update"
-                        size={25}
-                        color="rgb(139, 0, 0)"
-                        invert
-                      />
-                    </IconButton>
-                  </span>
+      <div className="myBox" style={{ float: id.admin ? null : "right" }}>
+        {db_list.length > 0 &&
+          db_list.map((item) => {
+            return (
+              <div className="ShowComment" key={item.item}>
+                <h4>
+                  <MaterialIcon
+                    icon="account_circle"
+                    size={30}
+                    color="#000000"
+                    invert
+                  />{" "}
+                  <u>User{++i}</u> :{" "}
+                </h4>
+                {item.countStars > 0 ? (
+                  <div
+                    style={{
+                      marginLeft: "22rem",
+                      justifyContent: "center",
+                    }}>
+                    <ReactStars
+                      classNames={"mx-left"}
+                      count={5}
+                      value={item.countStars}
+                      size={35}
+                      edit={false}
+                      isHalf={true}
+                      emptyIcon={<i className="far fa-star"></i>}
+                      halfIcon={<i className="fa fa-star-half-alt"></i>}
+                      fullIcon={<i className="fa fa-star"></i>}
+                      activeColor="#ffd700"
+                    />
+                  </div>
                 ) : null}
-              </p>
-            </div>
-          );
-        })}
+                <p className="text_">
+                  {item.commentaire} <br></br>
+                  {id.admin ? (
+                    <span>
+                      {" "}
+                      <strong>review</strong> : {item.predire}
+                      <IconButton onClick={updateReview.bind(this, item)}>
+                        <MaterialIcon
+                          icon="update"
+                          size={25}
+                          color="rgb(139, 0, 0)"
+                          invert
+                        />
+                      </IconButton>
+                      <IconButton onClick={deletComment.bind(this, item)}>
+                        <MaterialIcon
+                          icon="delete_sweep"
+                          size={25}
+                          color="rgb(139, 0, 0)"
+                          invert
+                        />
+                      </IconButton>
+                    </span>
+                  ) : null}
+                </p>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
