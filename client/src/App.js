@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./page/Home";
 import Admin from "./page/Admin";
-import Login from "./components/Connexion/Login";
+import Login from "./components/Connection/Login";
 import Product from "./page/product";
 import NotFound from "./page/NotFound";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";

@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@mui/material/IconButton";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import Navbar from "../components/Navbar";
-import Comments from "../components/commentaire/Comments";
+import Comments from "../components/Comments/Comments";
 import databaseApp, { storage } from "../config/firebaseConfig";
 import * as firebase from "firebase/database";
 import { ref, getDownloadURL } from "firebase/storage";
