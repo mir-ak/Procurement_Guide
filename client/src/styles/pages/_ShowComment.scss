@@ -1,0 +1,94 @@
+.ShowComment {
+  .container {
+    display: table-cell;
+    justify-content: start;
+    align-items: center;
+  }
+  .container img,
+  .container p {
+    flex-grow: 0;
+  }
+  h3 {
+    font-family: $font-2;
+    font-size: 1.65rem;
+    @include verticalCenter;
+    justify-content: center;
+  }
+  h4 {
+    font-family: $font-2;
+    font-size: 1.6rem;
+    margin-left: 22rem;
+    //@include verticalCenter;
+    justify-content: center;
+  }
+  .container img {
+    //position:absolute;
+    float: left;
+    width: 20%;
+    height: 40%;
+    box-shadow: 15px 2px 6px #333;
+    border: 2px;
+  }
+  .text_ {
+    justify-content: center;
+    margin-left: 22rem;
+    font-size: 1.3rem;
+    padding-bottom: 1.5rem !important;
+    width: 60%;
+  }
+  .box {
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 25px;
+    width: 50%;
+    margin: 4% auto;
+    border: 3px solid $color-1;
+
+    .comment {
+      justify-content: center;
+      @include verticalCenter;
+    }
+  }
+  .button {
+    justify-content: center;
+    //box-sizing: border-box;
+    //border-radius: 25px;
+    width: 10%;
+    margin: 8% auto;
+    //border: 3px solid $color-1;
+
+    .comment {
+      justify-content: center;
+      @include verticalCenter;
+    }
+  }
+  /* Box styles */
+  .myBox {
+    float: left;
+    border: none;
+    font: 24px/36px sans-serif;
+    width: 90%;
+    height: 380px;
+    overflow: auto;
+  }
+
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border: 1px solid $color-1;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(115deg, $color-1 10%, transparent 100%);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(115deg, $color-1 10%, transparent 100%);
+  }
+}
