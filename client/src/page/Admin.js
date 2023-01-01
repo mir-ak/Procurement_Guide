@@ -5,7 +5,7 @@ const Admin = () => {
   return (
     <div>
       <Navbar admin="admin" />
-      <div className="Product">
+      <div className="product">
         <ProductList admin="admin" />
       </div>
     </div>

@@ -6,7 +6,7 @@ function Product() {
   return (
     <div>
       <Navbar />
-      <div className="Product">
+      <div className="product">
         <ProductList admin="" />
       </div>
     </div>

@@ -243,7 +243,7 @@ export default class ProduiList extends Component {
   render() {
     let { products, radios, selectedRadio } = this.state;
     return (
-      <div className="produitContent">
+      <div className="productContent">
         <ul className="radioDisplay">
           {radios &&
             radios.map((radio) => {
