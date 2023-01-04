@@ -86,10 +86,7 @@ export default class ProduiList extends Component {
       const storageRef = ref(storage, `/media/${this.state.file.name}`);
       uploadBytesResumable(storageRef, this.state.file);
       this.handCancel();
-      setTimeout(() => {
-        NotificationManager.success(`product has been saved`);
-        window.location.reload(false);
-      }, 300);
+      NotificationManager.success(`product has been saved`);
     } else {
       this.setState({
         messageError:
@@ -214,7 +211,8 @@ export default class ProduiList extends Component {
     firebase.onValue(firebase.ref(databaseApp, "products/"), (snapshot) => {
       if (snapshot.val())
         Object.entries(snapshot.val()).forEach(([category, val], idx) => {
-          newRadios.push({ id: idx, value: category });
+          if (!newRadios.some((item) => item.id === idx))
+            newRadios.push({ id: idx, value: category });
           Object.entries(val).forEach(([id, values]) => {
             getDownloadURL(ref(storage, `media/${values.picture}`))
               .then((data) => {
@@ -227,7 +225,12 @@ export default class ProduiList extends Component {
                   recommendation: values.recommendation,
                   picture: data,
                 };
-                newProducts.push(newJsonProduct);
+                if (
+                  !newProducts.some((item) => item.id === newJsonProduct.id)
+                ) {
+                  newProducts.push(newJsonProduct);
+                }
+
                 this.setState({
                   radios: newRadios,
                   products: newProducts,
