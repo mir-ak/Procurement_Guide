@@ -74,22 +74,23 @@ function ShowComment() {
     firebase.onValue(
       firebase.ref(databaseApp, `products/${qaury.category}/${qaury.id}`),
       (snapshot) => {
-        getDownloadURL(ref(storage, `media/${snapshot.val().picture}`))
-          .then((data) => {
-            let newJsonProduct = {
-              title: snapshot.val().title,
-              description: snapshot.val().description,
-              price: snapshot.val().price,
-              category: snapshot.val().category,
-              picture: data,
-              recommendation: snapshot.val().recommendation,
-            };
+        if (snapshot.val())
+          getDownloadURL(ref(storage, `media/${snapshot.val().picture}`))
+            .then((data) => {
+              let newJsonProduct = {
+                title: snapshot.val().title,
+                description: snapshot.val().description,
+                price: snapshot.val().price,
+                category: snapshot.val().category,
+                picture: data,
+                recommendation: snapshot.val().recommendation,
+              };
 
-            newProducts.push(newJsonProduct);
+              newProducts.push(newJsonProduct);
 
-            setProducts(newProducts);
-          })
-          .catch((e) => console.log(e));
+              setProducts(newProducts);
+            })
+            .catch((e) => console.log(e));
       }
     );
   }, [qaury]);
