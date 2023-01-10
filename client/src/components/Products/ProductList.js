@@ -8,6 +8,12 @@ import * as firebase from "firebase/database";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { NotificationManager } from "react-notifications";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { withStyles } from "@material-ui/core/styles";
+
 export default class ProduiList extends Component {
   state = {
     products: [],
@@ -17,12 +23,19 @@ export default class ProduiList extends Component {
     picture: "",
     category: "",
     messageError: "",
+    filtre: "",
     file: {},
     radios2: [],
     radios: [],
     selectedRadio: "",
     showModel: false,
   };
+
+  CustomInputLabel = withStyles({
+    root: {
+      color: "rgb(99, 164, 233)",
+    },
+  })(InputLabel);
 
   handlRadio = (event) => {
     let radio = event.target.value;
@@ -51,6 +64,10 @@ export default class ProduiList extends Component {
         recommendation: "0/0",
       }
     );
+  };
+
+  filterPrice = (event) => {
+    this.setState({ filtre: event.target.value });
   };
 
   handCancel = () => {
@@ -102,14 +119,14 @@ export default class ProduiList extends Component {
           <div className="head">
             <Form>
               <FormGroup>
-                <Label for="title" hidden>
-                  Title
+                <Label for="Titre" hidden>
+                  Titre
                 </Label>
                 <Input
                   type="text"
                   name="title"
                   maxLength="30"
-                  placeholder="title"
+                  placeholder="Titre"
                   value={this.state.title}
                   onChange={(e) => {
                     this.setState({ title: e.target.value });
@@ -117,13 +134,13 @@ export default class ProduiList extends Component {
                 />
               </FormGroup>{" "}
               <FormGroup>
-                <Label for="description" hidden>
+                <Label for="Description" hidden>
                   Description
                 </Label>
                 <Input
                   type="text"
-                  name="description"
-                  placeholder="description"
+                  name="title"
+                  placeholder="Description"
                   maxLength="60"
                   value={this.state.description}
                   onChange={(e) => {
@@ -136,9 +153,9 @@ export default class ProduiList extends Component {
                   Prix
                 </Label>
                 <Input
-                  type="text"
-                  name="price"
-                  placeholder="price"
+                  type="number"
+                  name="title"
+                  placeholder="Prix € "
                   value={this.state.price}
                   onChange={(e) => {
                     this.setState({ price: e.target.value });
@@ -146,13 +163,13 @@ export default class ProduiList extends Component {
                 />
               </FormGroup>{" "}
               <FormGroup>
-                <Label for="category" hidden>
-                  category
+                <Label for="Catégorie" hidden>
+                  Catégorie
                 </Label>
                 <Input
                   type="text"
-                  name="category"
-                  placeholder="category"
+                  name="Catégorie"
+                  placeholder="Catégorie"
                   value={this.state.category}
                   onChange={(e) => {
                     this.setState({ category: e.target.value });
@@ -174,21 +191,21 @@ export default class ProduiList extends Component {
             </Form>
 
             <div className="sourceCode">
-              <span
-                className="button"
-                onClick={() => {
-                  this.onSave();
-                }}>
+              <span className="button" onClick={this.handleModel}>
                 {" "}
-                Save Product{" "}
+                Annuler
               </span>
             </div>
           </div>
           {this.state.messageError !== "" ? (
             <strong className="text">{this.state.messageError}</strong>
           ) : null}
-          <div className="button return" onClick={this.handleModel}>
-            close
+          <div
+            className="button return"
+            onClick={() => {
+              this.onSave();
+            }}>
+            Ajouter le produit{" "}
           </div>
         </div>
       </div>
@@ -232,8 +249,12 @@ export default class ProduiList extends Component {
                 }
 
                 this.setState({
-                  radios: newRadios,
-                  products: newProducts,
+                  radios: newRadios.sort((a, b) =>
+                    a.value.localeCompare(b.value)
+                  ),
+                  products: newProducts.sort((a, b) =>
+                    a.recommendation > b.recommendation ? -1 : 1
+                  ),
                   selectedRadio: newProducts[0].category,
                 });
               })
@@ -244,11 +265,14 @@ export default class ProduiList extends Component {
   }
 
   render() {
-    let { products, radios, selectedRadio } = this.state;
+    let { products, radios, selectedRadio, filtre } = this.state;
+    const filtreData = products
+      ? products.filter((item) => item.category.includes(selectedRadio))
+      : [];
     return (
       <div className="productContent">
         <ul className="radioDisplay">
-          {radios &&
+          {radios && radios.length <= 3 ? (
             radios.map((radio) => {
               return (
                 <li key={radio.id}>
@@ -263,12 +287,92 @@ export default class ProduiList extends Component {
                   <label htmlFor={radio.id}>{radio.value}</label>
                 </li>
               );
-            })}
+            })
+          ) : (
+            <FormControl
+              variant="standard"
+              sx={{
+                m: -1.8,
+                minWidth: 150,
+              }}>
+              <this.CustomInputLabel id="product">
+                Catégorie
+              </this.CustomInputLabel>
+              <Select
+                labelId="product"
+                id="simple-select"
+                sx={{
+                  color: "#4fedd2",
+                  ".MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(228, 219, 233, 0.25)",
+                  },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(228, 219, 233, 0.25)",
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "rgba(228, 219, 233, 0.25)",
+                  },
+                  ".MuiSvgIcon-root ": {
+                    fill: "#4fedd2 !important",
+                  },
+                }}
+                value={this.state.selectedRadio}
+                onChange={this.handlRadio}
+                label="Category">
+                {radios.map((radio) => (
+                  <MenuItem key={radio.id} value={radio.value}>
+                    {radio.value}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+
+          <FormControl
+            variant="filled"
+            sx={{
+              m: -2.8,
+              minWidth: 250,
+              opacity: 0.8,
+            }}>
+            <this.CustomInputLabel id="product">filters</this.CustomInputLabel>
+            <Select
+              labelId="product"
+              id="simple-select"
+              sx={{
+                color: "#4fedd2",
+                ".MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgba(228, 219, 233, 0.25)",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgba(228, 219, 233, 0.25)",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "rgba(228, 219, 233, 0.25)",
+                },
+                ".MuiSvgIcon-root ": {
+                  fill: "#4fedd2 !important",
+                },
+              }}
+              value={this.state.filtre}
+              onChange={this.filterPrice}
+              label="Category">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value="moin">
+                <em>Du moin cher au plus cher</em>
+              </MenuItem>
+              <MenuItem value="plus">
+                <em>Du plus cher au moin cher</em>
+              </MenuItem>
+            </Select>
+          </FormControl>
 
           <Box sx={{ flexGrow: 0.98 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {this.props.admin === "admin" ? (
-              <Tooltip title="Add Products">
+              <Tooltip title="Ajouter un produit">
                 <div style={{ marginTop: "-10px" }}>
                   <Button
                     outline
@@ -291,10 +395,31 @@ export default class ProduiList extends Component {
         </ul>
         <div className="projects">
           {this.state.showModel && this.showModel()}
-          {products &&
-            products
-              .filter((item) => item.category.includes(selectedRadio))
-              .map((item) => {
+          {filtre === "moin"
+            ? filtreData
+                .sort((a, b) => (a.price > b.price ? 1 : -1))
+                .map((item) => {
+                  return (
+                    <Product
+                      key={item.id}
+                      item={item}
+                      admin={this.props.admin}
+                    />
+                  );
+                })
+            : filtre === "plus"
+            ? filtreData
+                .sort((a, b) => (a.price > b.price ? -1 : 1))
+                .map((item) => {
+                  return (
+                    <Product
+                      key={item.id}
+                      item={item}
+                      admin={this.props.admin}
+                    />
+                  );
+                })
+            : filtreData.map((item) => {
                 return (
                   <Product key={item.id} item={item} admin={this.props.admin} />
                 );
