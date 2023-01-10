@@ -149,7 +149,7 @@
       border-radius: $borderRadius;
       animation: popup 0.3s ease forwards;
       transform-origin: center;
-
+      z-index: 100;
       .modelContent {
         position: relative;
         top: 15%;
@@ -188,7 +188,7 @@
         justify-content: center;
         @include verticalCenter;
         border-radius: $borderRadius;
-        padding: 0.3rem;
+        padding: 0.2rem;
         &:hover {
           background: $color-4;
         }
@@ -201,7 +201,7 @@
       }
       .return {
         margin: 1rem auto;
-        width: 80px;
+        width: 220px;
       }
     }
   }
