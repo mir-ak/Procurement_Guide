@@ -11,6 +11,7 @@ import { NotificationManager } from "react-notifications";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import Pagination from "@mui/material/Pagination";
 import Select from "@mui/material/Select";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -29,6 +30,8 @@ export default class ProduiList extends Component {
     radios: [],
     selectedRadio: "",
     showModel: false,
+    currentPage: 1,
+    elementsPerPage: 10,
   };
 
   CustomInputLabel = withStyles({
@@ -58,7 +61,7 @@ export default class ProduiList extends Component {
       {
         title: this.state.title,
         description: this.state.description,
-        price: this.state.price,
+        price: Number(this.state.price),
         category: this.state.category,
         picture: this.state.file.name,
         recommendation: "0/0",
@@ -253,7 +256,22 @@ export default class ProduiList extends Component {
                     a.value.localeCompare(b.value)
                   ),
                   products: newProducts.sort((a, b) =>
-                    a.recommendation > b.recommendation ? -1 : 1
+                    (isNaN(
+                      Number(a.recommendation.split("/")[0]) /
+                        Number(a.recommendation.split("/")[1])
+                    )
+                      ? 0
+                      : Number(a.recommendation.split("/")[0]) /
+                        Number(a.recommendation.split("/")[1])) >
+                    (isNaN(
+                      Number(b.recommendation.split("/")[0]) /
+                        Number(b.recommendation.split("/")[1])
+                    )
+                      ? 0
+                      : Number(b.recommendation.split("/")[0]) /
+                        Number(b.recommendation.split("/")[1]))
+                      ? -1
+                      : 1
                   ),
                   selectedRadio: newProducts[0].category,
                 });
@@ -265,14 +283,18 @@ export default class ProduiList extends Component {
   }
 
   render() {
-    let { products, radios, selectedRadio, filtre } = this.state;
-    const filtreData = products
+    let { products, radios, selectedRadio, filtre, elementsPerPage } =
+      this.state;
+    const filterData = products
       ? products.filter((item) => item.category.includes(selectedRadio))
       : [];
+    const indexOfLastElement =
+      this.state.currentPage * this.state.elementsPerPage;
+    const indexOfFirstElement = indexOfLastElement - this.state.elementsPerPage;
     return (
       <div className="productContent">
         <ul className="radioDisplay">
-          {radios && radios.length <= 3 ? (
+          {radios && radios.length <= 4 ? (
             radios.map((radio) => {
               return (
                 <li key={radio.id}>
@@ -293,7 +315,7 @@ export default class ProduiList extends Component {
               variant="standard"
               sx={{
                 m: -1.8,
-                minWidth: 150,
+                minWidth: 180,
               }}>
               <this.CustomInputLabel id="product">
                 Catégorie
@@ -334,6 +356,9 @@ export default class ProduiList extends Component {
               m: -2.8,
               minWidth: 250,
               opacity: 0.8,
+
+              //position: "absolute",
+              left: "5%",
             }}>
             <this.CustomInputLabel id="product">filters</this.CustomInputLabel>
             <Select
@@ -396,8 +421,9 @@ export default class ProduiList extends Component {
         <div className="projects">
           {this.state.showModel && this.showModel()}
           {filtre === "moin"
-            ? filtreData
+            ? filterData
                 .sort((a, b) => (a.price > b.price ? 1 : -1))
+                .slice(indexOfFirstElement, indexOfLastElement)
                 .map((item) => {
                   return (
                     <Product
@@ -408,8 +434,9 @@ export default class ProduiList extends Component {
                   );
                 })
             : filtre === "plus"
-            ? filtreData
+            ? filterData
                 .sort((a, b) => (a.price > b.price ? -1 : 1))
+                .slice(indexOfFirstElement, indexOfLastElement)
                 .map((item) => {
                   return (
                     <Product
@@ -419,11 +446,25 @@ export default class ProduiList extends Component {
                     />
                   );
                 })
-            : filtreData.map((item) => {
-                return (
-                  <Product key={item.id} item={item} admin={this.props.admin} />
-                );
-              })}
+            : filterData
+                .slice(indexOfFirstElement, indexOfLastElement)
+                .map((item) => {
+                  return (
+                    <Product
+                      key={item.id}
+                      item={item}
+                      admin={this.props.admin}
+                    />
+                  );
+                })}
+        </div>
+        <div className="pagination">
+          <Pagination
+            color="primary"
+            defaultPage={1}
+            count={Math.ceil(filterData.length / elementsPerPage)}
+            onChange={(event, page) => this.setState({ currentPage: page })}
+          />
         </div>
       </div>
     );

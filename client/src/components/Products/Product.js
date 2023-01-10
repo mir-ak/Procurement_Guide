@@ -59,7 +59,7 @@ export default class Produit extends Component {
               fontSize: "1.4rem",
               backgroundColor: "green",
             }}>
-            {price}
+            {price}€
           </h6>
         </button>
       </div>
