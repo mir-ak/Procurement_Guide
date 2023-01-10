@@ -53,9 +53,11 @@ const Navbar = (admin) => {
       position="static">
       <Toolbar>
         {admin.admin ? (
-          <IconButton component={Link} to="/admin">
-            <MaterialIcon icon="house" size={50} color="#ffffff" invert />
-          </IconButton>
+          <Tooltip title="Page d'accueil pour admin">
+            <IconButton component={Link} to="/admin">
+              <MaterialIcon icon="house" size={50} color="#ffffff" invert />
+            </IconButton>
+          </Tooltip>
         ) : (
           <Tooltip title="Page d'accueil">
             <IconButton component={Link} to="/">
@@ -65,29 +67,45 @@ const Navbar = (admin) => {
         )}
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <IconButton component={Link} to="/product">
-            <MaterialIcon
-              icon="production_quantity_limits"
-              size={38}
-              color="#ffffff"
-              invert
-            />
-          </IconButton>
-          {admin.admin ? (
-            <IconButton
-              component={Link}
-              to="/"
-              onClick={() => {
-                Auth.logout();
-                NotificationManager.success(`You are logged out successfully`);
-              }}>
+          <Tooltip title="Produits">
+            <IconButton component={Link} to="/product">
               <MaterialIcon
-                icon="power_settings_new"
+                icon="production_quantity_limits"
                 size={38}
                 color="#ffffff"
                 invert
               />
             </IconButton>
+          </Tooltip>
+          <Tooltip title="Contact">
+            <IconButton component={Link} to="/contact">
+              <MaterialIcon
+                icon="contact_mail"
+                size={38}
+                color="#ffffff"
+                invert
+              />
+            </IconButton>
+          </Tooltip>
+          {admin.admin ? (
+            <Tooltip title="Se déconnecter">
+              <IconButton
+                component={Link}
+                to="/"
+                onClick={() => {
+                  Auth.logout();
+                  NotificationManager.success(
+                    `You are logged out successfully`
+                  );
+                }}>
+                <MaterialIcon
+                  icon="power_settings_new"
+                  size={38}
+                  color="#ffffff"
+                  invert
+                />
+              </IconButton>
+            </Tooltip>
           ) : (
             <Tooltip title="Partie Admin">
               <IconButton component={Link} to="/admin">
