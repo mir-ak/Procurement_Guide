@@ -32,13 +32,13 @@ export default class ApexChartAngleCircle extends Component {
           },
         },
         colors: ["#FFEC19", "#FFC100", "#FF9800", "#FF5607", "#F6412D"],
-        labels: ["5 Star", "4 Star", "3 Star", "2 Star", "1 Star"],
+        labels: ["5 Étoile", "4 Étoile", "3 Étoile", "2 Étoile", "1 Étoile"],
         legend: {
           show: true,
           floating: true,
           fontSize: "14px",
           position: "left",
-          offsetX: -10,
+          offsetX: -15,
           offsetY: 0,
           labels: {
             useSeriesColors: false,

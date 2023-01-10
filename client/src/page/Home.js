@@ -10,7 +10,7 @@ function Home() {
       <div className="home">
         <div className="content">
           <div className="typing-demo">
-            <h1>Welcome to Procurement Guide</h1>
+            <h1>Bienvenue dans Procurement Guide</h1>
           </div>
         </div>
       </div>

@@ -107,12 +107,12 @@ function ShowComment() {
               color="danger"
               style={{ justifyContent: "center", boxSizing: "border-box" }}
               onClick={deletProduct.bind(this, qaury.id)}>
-              Remove Product
+              Supprimer le produit
             </Button>
           </div>
         ) : (
           <div className="box">
-            <h3>Write a review </h3>
+            <h3>Écrire une critique</h3>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <ReactStars
                 classNames={"mx-left"}
@@ -130,7 +130,7 @@ function ShowComment() {
               <TextField
                 variant="standard"
                 margin="normal"
-                label="Write a review *"
+                label="Écrire une critique *"
                 type="text"
                 style={{ width: "90%" }}
                 value={FromCommentaire.commentaire}
@@ -166,7 +166,7 @@ function ShowComment() {
         <div className="ShowComment">
           <h3>
             {" "}
-            <u>Product : {products[0].title} </u>
+            <u>Produit : {products[0].title} </u>
           </h3>
           <div className="container">
             <img src={products[0].picture} alt="" />

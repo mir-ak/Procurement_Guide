@@ -4,7 +4,7 @@ import ReactApexChart from "react-apexcharts";
 export default class ApexChart extends Component {
   state = {
     options: {
-      labels: ["Positive Comments", "Negative Comments"],
+      labels: ["Commentaires Positifs", " Commentaires Négatifs"],
       colors: ["#42EC4A", "#DF5133"],
     },
   };
@@ -13,7 +13,7 @@ export default class ApexChart extends Component {
     return (
       <div>
         <h3>
-          <u>Analysis</u>
+          <u>Analyses</u>
         </h3>
         <ReactApexChart
           options={this.state.options}

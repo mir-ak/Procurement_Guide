@@ -152,12 +152,12 @@ export default function ExperClass({ id }) {
                 callfunction();
               }}
               color="teal"
-              width={"200px"}
+              width={"220px"}
               animation={true}
               style={{
                 borderRadius: "25px",
               }}
-              idleText={"Retrain the ML Model "}
+              idleText={"Réentraîner le modèle ML "}
             />
           </div>
           {totalStars.length > 0 ? (
@@ -168,7 +168,7 @@ export default function ExperClass({ id }) {
                 top: "5%",
               }}>
               <strong style={{ fontSize: "25px" }}>
-                <u>Customer reviews</u>
+                <u>Avis des clients</u>
               </strong>
               <div>
                 <ReactStars
@@ -185,7 +185,7 @@ export default function ExperClass({ id }) {
                 />
                 <div>
                   <strong>
-                    <u>Total</u>: {ArrayAvg(totalStars).toFixed(2)} out of 5
+                    <u>Note Globale</u>: {ArrayAvg(totalStars).toFixed(2)} sur 5
                   </strong>
                 </div>
                 <div>
@@ -216,7 +216,7 @@ export default function ExperClass({ id }) {
                     color="#000000"
                     invert
                   />{" "}
-                  <u>User{++i}</u> :{" "}
+                  <u>Utlilisateur{++i}</u> :{" "}
                 </h4>
                 {item.countStars > 0 ? (
                   <div
@@ -243,7 +243,7 @@ export default function ExperClass({ id }) {
                   {id.admin ? (
                     <span>
                       {" "}
-                      <strong>review</strong> : {item.predire}
+                      <strong>avis</strong> : {item.predire}
                       <IconButton onClick={updateReview.bind(this, item)}>
                         <MaterialIcon
                           icon="update"
