@@ -37,7 +37,10 @@ function ShowComment() {
             predire: data["comments"],
             countStars: countStars,
           });
-          if (products.length > 0)
+          if (products.length > 0) {
+            console.log(
+              Number(products[0].recommendation.split("/")[0]) + countStars
+            );
             firebase.update(
               firebase.ref(
                 databaseApp,
@@ -49,9 +52,13 @@ function ShowComment() {
                 } / ${Number(products[0].recommendation.split("/")[1]) + 1}`,
               }
             );
+          }
         });
     }
     cancelCourse();
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 500);
   };
 
   const deletProduct = (id) => {
@@ -87,7 +94,6 @@ function ShowComment() {
               };
 
               newProducts.push(newJsonProduct);
-
               setProducts(newProducts);
             })
             .catch((e) => console.log(e));
