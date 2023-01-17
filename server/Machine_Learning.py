@@ -67,7 +67,7 @@ def notreModel(IsOk):
   df['sentiment'] = sentimentCoding.fit_transform(df['sentiment'])
   # application des opiration de prétraitement sur les donneés de review
   df['review']=df['review'].apply(traitement_text, lema = True)
-  # render le text en numi
+  # render le text en num 
   count_vect = CountVectorizer(tokenizer=lambda doc: doc, lowercase=False)
   # count words 
   X = count_vect.fit_transform(df['review'])
