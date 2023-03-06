@@ -2,16 +2,16 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBdIgL7mrTMgjU2d6Tp2t_R2sbfDf48VBU",
-  authDomain: "portfolioweb-3106e.firebaseapp.com",
-  databaseURL:
-    "https://portfolioweb-3106e-default-rtdb.europe-west1.firebasedatabase.app/",
-  projectId: "portfolioweb-3106e",
-  storageBucket: "portfolioweb-3106e.appspot.com",
-  messagingSenderId: "1076042004611",
-  appId: "1:1076042004611:web:9b7042918a1d82f79203b6",
-  measurementId: "G-7VTL8N9119",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDER_ID,
+  appId: process.env.REACT_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
